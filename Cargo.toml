@@ -1,0 +1,48 @@
+[workspace]
+members = ["storybook", "e2e"]
+
+[workspace.package]
+version = "0.1.0"
+
+[package]
+name = "vertigo-3d"
+version.workspace = true
+authors = ["Michał Pokrywka <wolfmoon@o2.pl>"]
+description = "Declarative 3D scenes in vertigo, drawn with WebGL 2"
+readme = "README.md"
+keywords = ["wasm", "web", "reactive", "3d", "webgl"]
+homepage = "https://vertigo.znoj.pl"
+repository = "https://github.com/vertigo-web/vertigo-3d"
+documentation = "https://docs.rs/vertigo-3d/"
+categories = ["gui", "graphics", "rendering", "wasm", "web-programming"]
+license = "MIT OR Apache-2.0"
+edition = "2024"
+exclude = ["/.github"]
+
+[workspace.dependencies]
+vertigo = "0.14.4"
+vertigo-testing = "0.14.4"
+
+# For the library, its storybook and its end-to-end tests alike
+[workspace.lints.rust]
+rust_2018_idioms = { level = "deny", priority = -1 }
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+# A true invariant gets `expect("why it cannot fail")` instead; tests may unwrap (clippy.toml)
+unwrap_used = "warn"
+
+[dependencies]
+glam = "0.34"
+vertigo = { workspace = true }
+
+[lints]
+workspace = true
+
+# `vertigo::webgl` and `vertigo::webgpu` aren't released yet: until they are, vertigo comes from
+# its master branch, at the commit Cargo.lock pins (`cargo update -p vertigo` moves it on).
+[patch.crates-io]
+vertigo = { git = "https://github.com/vertigo-web/vertigo", branch = "master" }
+vertigo-cli = { git = "https://github.com/vertigo-web/vertigo", branch = "master" }
+vertigo-testing = { git = "https://github.com/vertigo-web/vertigo", branch = "master" }

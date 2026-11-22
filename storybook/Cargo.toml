@@ -1,0 +1,17 @@
+[package]
+name = "vertigo-3d-storybook"
+version.workspace = true
+authors = ["Michał Pokrywka <wolfmoon@o2.pl>"]
+edition = "2024"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+vertigo = { workspace = true }
+vertigo-3d = { path = ".." }
+vertigo-forms = "0.2"
+
+[lints]
+workspace = true
