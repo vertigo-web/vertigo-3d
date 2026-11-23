@@ -14,7 +14,7 @@ use vertigo::{
 use crate::{
     Camera, Color, Drag, DragPhase, Layer, Light, Loading, Object, Pick, Ray, Texture,
     layer::Drawn,
-    pick::{nearest, on_canvas},
+    pick::on_canvas,
     render::{Frame, GlRenderer, GpuRenderer, Instance},
 };
 
@@ -622,8 +622,7 @@ impl Pointer {
         let ray = self.ray(event)?;
         let last = self.last.borrow();
         let frame = last.as_ref()?;
-        let (index, pick) = nearest(
-            &ray,
+        let (index, pick) = ray.nearest(
             frame
                 .instances
                 .iter()

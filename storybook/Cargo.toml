@@ -9,6 +9,7 @@ publish = false
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
+rapier3d = "0.36"
 vertigo = { workspace = true }
 vertigo-3d = { path = ".." }
 vertigo-forms = "0.2"

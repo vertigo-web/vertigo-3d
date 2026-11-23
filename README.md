@@ -27,7 +27,9 @@ maps give them a relief (`Material::normal_map`, `Material::height_map`). Object
 alpha below 1 show what is behind them, drawn after the others, the farthest first. An object is
 told of clicks on it, with the point clicked, of the mouse over it, and of dragging it with the
 mouse, a finger or a pen (`Object::on_click`, `Object::on_hover`, `Object::on_drag`), where nothing
-nearer the camera is in the way.
+nearer the camera is in the way. A `Ray` of one's own finds what it meets as a click does
+(`Ray::nearest`), and `Mesh::bounds` is the box around a mesh, f. ex. for a physics engine moving
+the objects.
 
 A `Shader` puts code of its own into the shaders drawing a material, moving its corners or
 coloring its pixels with the scene's time, in GLSL for WebGL and WGSL for WebGPU. A slow computer may draw a scene in fewer pixels,

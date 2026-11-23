@@ -5,10 +5,12 @@ use vertigo_forms::{Tab, Tabs, TabsParams};
 
 mod background;
 mod cubes;
+mod dpt;
 mod dragging;
 mod glass;
 mod layers;
 mod light;
+mod physics;
 mod picking;
 mod relief;
 mod route;
@@ -16,6 +18,7 @@ mod shaders;
 mod spinning;
 mod textures;
 mod thousands;
+mod world;
 
 use route::Route;
 
@@ -43,6 +46,16 @@ fn app() -> DomNode {
             key: Route::Dragging,
             name: "Dragging".to_string(),
             render: Rc::new(|_: &Route| dragging::render()),
+        },
+        Tab {
+            key: Route::Physics,
+            name: "Physics".to_string(),
+            render: Rc::new(|_: &Route| physics::render()),
+        },
+        Tab {
+            key: Route::Dpt,
+            name: "DPT".to_string(),
+            render: Rc::new(|_: &Route| dpt::render()),
         },
         Tab {
             key: Route::Textures,

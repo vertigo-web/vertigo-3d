@@ -127,7 +127,7 @@ pub(crate) fn see_through(
 ) -> (Vec<(Mesh, Vec<f32>)>, Vec<Run>) {
     let forward = (camera.target - camera.eye).normalize_or_zero();
     let depth = |instance: &Instance| {
-        let (center, _) = instance.mesh().data().bounds;
+        let center = instance.mesh().data().bounds.center();
         let center = instance.transform.to_matrix().transform_point3(center);
         (center - camera.eye).dot(forward)
     };

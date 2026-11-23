@@ -17,10 +17,13 @@
 //! ([`Material::normal_map`], [`Material::height_map`]), and an object shows what is behind it
 //! where its color's alpha is below 1. An object tells of clicks on it, with
 //! [`Object::on_click`], of the pointer over it, with [`Object::on_hover`], and of dragging it,
-//! with [`Object::on_drag`]. A [`Shader`] puts code of its own into the shaders drawing a
-//! material, with the scene's time. A [`Layer`] draws what objects can't be, with
-//! [`vertigo::webgl`] or [`vertigo::webgpu`], in the scene, with its camera.
+//! with [`Object::on_drag`]. A [`Ray`] finds what it meets as clicks do, and [`Mesh::bounds`]
+//! is the box around a mesh, f. ex. for a physics engine moving the objects. A [`Shader`] puts
+//! code of its own into the shaders drawing a material, with the scene's time. A [`Layer`] draws
+//! what objects can't be, with [`vertigo::webgl`] or [`vertigo::webgpu`], in the scene, with its
+//! camera.
 
+mod bounds;
 mod camera;
 mod color;
 mod drag;
@@ -37,6 +40,7 @@ mod shader;
 mod texture;
 mod transform;
 
+pub use bounds::Bounds;
 pub use camera::{Camera, Projection};
 pub use color::Color;
 pub use drag::{Drag, DragPhase};

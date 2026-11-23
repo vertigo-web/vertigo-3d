@@ -3,10 +3,12 @@
 
 mod background;
 mod cubes;
+mod dpt;
 mod dragging;
 mod glass;
 mod layers;
 mod light;
+mod physics;
 mod picking;
 mod relief;
 mod shaders;
@@ -23,6 +25,9 @@ fn main() {
         background::scene_draws_again_when_the_background_changes,
         cubes::the_ball_hides_and_shows_again,
         cubes::the_camera_goes_round,
+        dpt::the_bodies_fall_onto_the_tiles_and_come_to_rest,
+        dpt::the_weights_are_told,
+        dpt::a_ball_dragged_goes_with_the_pointer_and_stays_where_let_go,
         dragging::a_box_goes_with_the_pointer_along_the_floor,
         dragging::a_box_stops_at_the_wall,
         dragging::a_drag_goes_on_outside_the_canvas,
@@ -39,6 +44,9 @@ fn main() {
         light::the_lit_side_follows_the_sun,
         light::a_lamp_lights_the_side_facing_it,
         light::a_shiny_ball_has_a_highlight,
+        physics::the_bodies_fall_and_come_to_rest,
+        physics::a_click_throws_a_body_up_and_it_comes_to_rest_again,
+        physics::drop_again_starts_over,
         picking::the_pointer_over_a_cube_is_told_and_shown,
         picking::a_click_on_a_cube_tells_where,
         picking::the_ball_in_the_way_is_clicked_not_the_cube_behind,

@@ -12,7 +12,7 @@ use vertigo_3d::{
 use crate::background::css_frame;
 
 /// `width` by `height` pixels, each of `color` at its column and row.
-fn pixels(width: u32, height: u32, color: impl Fn(u32, u32) -> [u8; 4]) -> Vec<u8> {
+pub fn pixels(width: u32, height: u32, color: impl Fn(u32, u32) -> [u8; 4]) -> Vec<u8> {
     (0..height)
         .flat_map(|row| (0..width).map(move |column| (column, row)))
         .flat_map(|(column, row)| color(column, row))

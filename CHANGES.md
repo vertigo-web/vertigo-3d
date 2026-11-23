@@ -57,6 +57,13 @@
   the pointer. `Drag::moved_on` - how far the point grabbed has moved along a plane, f. ex. the
   floor. The pointer shows the object can be grabbed, and a finger on a scene of objects to drag
   drags them instead of scrolling the page.
+* `Ray::on_mesh` and `Ray::nearest` - where a ray meets a mesh moved by a transform, or which of
+  several it meets first, found as clicks are, f. ex. what an object stands on. `Ray::new` makes
+  one of one's own.
+* `Mesh::bounds` - the box around a mesh (`Bounds`), and `Bounds::transformed` the box around an
+  object of it, f. ex. to size the shapes of a physics engine moving the objects or to tell
+  whether two objects may touch (`Bounds::overlaps`). The storybook's "Physics" story moves
+  objects with rapier3d, and its "DPT" story drags them around.
 * `Texture` - an image on objects, from a URL the browser loads (the scene is drawn again when it
   comes) or from pixels made in Rust (`TextureError`), `sharp` for pixel art, shared by the
   objects showing it. `Material::texture` puts it on, times the material's color,

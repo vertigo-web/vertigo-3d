@@ -2,7 +2,7 @@ use std::{fmt, rc::Rc};
 
 use glam::{Vec2, Vec3};
 
-use crate::pick::bounds;
+use crate::{Bounds, pick::radius};
 
 /// The shape of objects: triangles of corners, each corner with its position and its normal,
 /// the way its surface faces. Shared by the objects of the shape, and sent to the browser once
@@ -40,8 +40,10 @@ pub(crate) struct MeshData {
     pub tangents: Vec<f32>,
     /// Corners of the triangles, three a triangle.
     pub indices: Vec<u32>,
-    /// The middle and the radius of a sphere around the corners.
-    pub bounds: (Vec3, f32),
+    /// The box around the corners.
+    pub bounds: Bounds,
+    /// The distance from the middle of the box to the farthest corner: a sphere around them.
+    pub radius: f32,
 }
 
 /// Why [`Mesh::from_triangles`] didn't make a mesh.
@@ -162,13 +164,16 @@ impl Mesh {
 
     fn made(positions: &[Vec3], normals: &[Vec3], uvs: &[Vec2], indices: Vec<u32>) -> Self {
         let tangents = tangents(positions, normals, uvs, &indices);
+        let bounds = Bounds::around(positions.iter().copied());
+        let radius = radius(positions, bounds.center());
         let positions: Vec<f32> = positions
             .iter()
             .flat_map(|position| position.to_array())
             .collect();
         Self {
             data: Rc::new(MeshData {
-                bounds: bounds(&positions),
+                bounds,
+                radius,
                 tangents,
                 positions,
                 normals: normals
@@ -259,6 +264,21 @@ impl Mesh {
         ];
         let uvs = [Vec2::ZERO, Vec2::X, Vec2::ONE, Vec2::Y];
         Self::made(&positions, &[Vec3::Y; 4], &uvs, vec![0, 2, 1, 0, 3, 2])
+    }
+
+    /// The box around its corners where it's made, before an object's transform: f. ex. from
+    /// -0.5 to 0.5 along each axis for a cube. [`Bounds::transformed`] puts it where an object of
+    /// the mesh is.
+    ///
+    /// ```rust
+    /// use vertigo_3d::{Mesh, math::Vec3};
+    ///
+    /// let ball = Mesh::sphere(24).bounds();
+    /// assert!(ball.min.abs_diff_eq(Vec3::splat(-0.5), 1e-6));
+    /// assert!(ball.max.abs_diff_eq(Vec3::splat(0.5), 1e-6));
+    /// ```
+    pub fn bounds(&self) -> Bounds {
+        self.data.bounds
     }
 
     /// How many triangles it has.
